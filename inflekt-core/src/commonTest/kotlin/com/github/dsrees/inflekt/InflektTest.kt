@@ -1,4 +1,4 @@
-package dev.codestead.inflekt
+package com.github.dsrees.inflekt
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

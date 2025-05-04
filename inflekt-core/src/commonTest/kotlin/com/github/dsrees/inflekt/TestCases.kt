@@ -1,4 +1,4 @@
-package dev.codestead.inflekt
+package com.github.dsrees.inflekt
 
 internal val Pair<String, String>.singularValue
     get() = first

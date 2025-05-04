@@ -1,4 +1,4 @@
-package dev.codestead.inflekt
+package com.github.dsrees.inflekt
 
 import kotlin.math.abs
 

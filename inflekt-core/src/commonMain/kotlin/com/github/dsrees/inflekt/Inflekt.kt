@@ -1,4 +1,4 @@
-package dev.codestead.inflekt
+package com.github.dsrees.inflekt
 
 private data class Rule(
     val rule: Regex,
@@ -407,7 +407,7 @@ object Inflekt {
             "pickaxe" to "pickaxes",
             "passerby" to "passersby",
             "canvas" to "canvases",
-        ).forEach(::addIrregularRule)
+        ).forEach(Inflekt::addIrregularRule)
     }
 
     private fun seedPluralizationRules() {
@@ -438,12 +438,12 @@ object Inflekt {
             "eaux\$" to "\$0",
             "m[ae]n\$" to "men",
         ).map { it.rule.toRegex(RegexOption.IGNORE_CASE) to it.replacement }
-            .forEach(::addPluralRule)
+            .forEach(Inflekt::addPluralRule)
 
         // Literal string rules
         listOf(
             "thou" to "you",
-        ).forEach(::addPluralRule)
+        ).forEach(Inflekt::addPluralRule)
     }
 
     private fun seedSingularizationRules() {
@@ -474,7 +474,7 @@ object Inflekt {
             "(eau)x?\$" to "\$1",
             "men\$" to "man",
         ).map { it.rule.toRegex(RegexOption.IGNORE_CASE) to it.replacement }
-            .forEach(::addSingularRule)
+            .forEach(Inflekt::addSingularRule)
     }
 
     private fun seedUncountableRules() {
@@ -573,7 +573,7 @@ object Inflekt {
             "wildebeest",
             "wildlife",
             "you",
-        ).forEach(::addUncountableRule)
+        ).forEach(Inflekt::addUncountableRule)
 
         // Regex rules
         listOf(
@@ -586,6 +586,6 @@ object Inflekt {
             "pox$", // "chickpox", "smallpox"
             "sheep$",
         ).map { it.toRegex(RegexOption.IGNORE_CASE) }
-            .forEach(::addUncountableRule)
+            .forEach(Inflekt::addUncountableRule)
     }
 }
