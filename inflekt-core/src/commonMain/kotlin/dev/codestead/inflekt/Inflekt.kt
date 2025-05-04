@@ -10,16 +10,10 @@ private data class Rule(
 private typealias RuleSet = MutableList<Rule>
 private typealias IrregularMap = MutableMap<String, String>
 
-private val Pair<String, String>.rule
+private val <A, B> Pair<A, B>.rule
     get() = first
 
-private val Pair<String, String>.replacement
-    get() = second
-
-private val Pair<Regex, String>.rule
-    get() = first
-
-private val Pair<Regex, String>.replacement
+private val <A, B> Pair<A, B>.replacement
     get() = second
 
 object Inflekt {
@@ -80,7 +74,9 @@ object Inflekt {
         }
 
         // Check against the replacement map for a direct word replacement.
-        replace[token]?.let { return restoreCase(word, it) }
+        replace[token]?.let {
+            return restoreCase(word, it)
+        }
 
         // Run all the rules against the word.
         return sanitizeWord(token, word, rules)
@@ -176,11 +172,19 @@ object Inflekt {
      *
      * ```kotlin
      * addPluralRule("person" to "peeps")
+     * addPluralRule(Regex("gex$", RegexOption.IGNORE_CASE) to "gexii")
      * ```
      *
      * @param pair
+     * @throws [IllegalArgumentException] if rule was not a [String] or [Regex]
      */
-    fun addPluralRule(pair: Pair<String, String>) = addPluralRule(pair.rule, pair.replacement)
+    fun <RuleType> addPluralRule(pair: Pair<RuleType, String>) {
+        when (val rule = pair.rule) {
+            is Regex -> addPluralRule(rule, pair.replacement)
+            is String -> addPluralRule(rule, pair.replacement)
+            else -> throw IllegalArgumentException("A rule must be either String or Regex")
+        }
+    }
 
     /**
      * Add a pluralization rule to the collection.
@@ -197,17 +201,6 @@ object Inflekt {
         rule: String,
         replacement: String,
     ) = addPluralRule(sanitizeRule(rule) to replacement)
-
-    /**
-     * Add a pluralization rule to the collection.
-     *
-     * ```kotlin
-     * addPluralRule(Regex("gex$", RegexOption.IGNORE_CASE) to "gexii")
-     * ```
-     *
-     * @param pair
-     */
-    fun addPluralRule(pair: Pair<Regex, String>) = addPluralRule(pair.rule, pair.replacement)
 
     /**
      * Add a pluralization rule to the collection.
@@ -232,8 +225,15 @@ object Inflekt {
      * ```
      *
      * @param pair
+     * @throws [IllegalArgumentException] if rule was not a [String] or [Regex]
      */
-    fun addSingularRule(pair: Pair<String, String>) = addSingularRule(pair.rule, pair.replacement)
+    fun <RuleType> addSingularRule(pair: Pair<RuleType, String>) {
+        when (val rule = pair.rule) {
+            is Regex -> addSingularRule(rule, pair.replacement)
+            is String -> addSingularRule(rule, pair.replacement)
+            else -> throw IllegalArgumentException("A rule must be either String or Regex")
+        }
+    }
 
     /**
      * Add a singularization rule to the collection.
@@ -250,17 +250,6 @@ object Inflekt {
         rule: String,
         replacement: String,
     ) = addSingularRule(sanitizeRule(rule) to replacement)
-
-    /**
-     * Add a singularization rule to the collection.
-     *
-     * ```kotlin
-     * addSingularRule(Regex("singles$") to "singular")
-     * ```
-     *
-     * @param pair
-     */
-    fun addSingularRule(pair: Pair<Regex, String>) = addSingularRule(pair.rule, pair.replacement)
 
     /**
      * Add a singularization rule to the collection.
@@ -444,7 +433,7 @@ object Inflekt {
             "(child)(?:ren)?\$" to "\$1ren",
             "eaux\$" to "\$0",
             "m[ae]n\$" to "men",
-        ).map { it.first.toRegex(RegexOption.IGNORE_CASE) to it.second }
+        ).map { it.rule.toRegex(RegexOption.IGNORE_CASE) to it.replacement }
             .forEach(::addPluralRule)
 
         // Literal string rules
@@ -454,6 +443,7 @@ object Inflekt {
     }
 
     private fun seedSingularizationRules() {
+        // Regex rules
         listOf(
             "s\$" to "",
             "(ss)\$" to "\$1",
@@ -479,10 +469,12 @@ object Inflekt {
             "(child)ren\$" to "\$1",
             "(eau)x?\$" to "\$1",
             "men\$" to "man",
-        ).forEach(::addSingularRule)
+        ).map { it.rule.toRegex(RegexOption.IGNORE_CASE) to it.replacement }
+            .forEach(::addSingularRule)
     }
 
     private fun seedUncountableRules() {
+        // Literal string rules
         listOf(
             "adulthood",
             "advice",
@@ -579,15 +571,17 @@ object Inflekt {
             "you",
         ).forEach(::addUncountableRule)
 
+        // Regex rules
         listOf(
-            Regex("pok[eé]mon$", RegexOption.IGNORE_CASE),
-            Regex("[^aeiou]ese$", RegexOption.IGNORE_CASE), // "chinese", "japanese"
-            Regex("deer$", RegexOption.IGNORE_CASE), // "deer", "reindeer"
-            Regex("fish$", RegexOption.IGNORE_CASE), // "fish", "blowfish", "angelfish"
-            Regex("measles$", RegexOption.IGNORE_CASE),
-            Regex("o[iu]s$", RegexOption.IGNORE_CASE), // "carnivorous"
-            Regex("pox$", RegexOption.IGNORE_CASE), // "chickpox", "smallpox"
-            Regex("sheep$", RegexOption.IGNORE_CASE),
-        ).forEach(::addUncountableRule)
+            "pok[eé]mon$",
+            "[^aeiou]ese$", // "chinese", "japanese"
+            "deer$", // "deer", "reindeer"
+            "fish$", // "fish", "blowfish", "angelfish"
+            "measles$",
+            "o[iu]s$", // "carnivorous"
+            "pox$", // "chickpox", "smallpox"
+            "sheep$",
+        ).map { it.toRegex(RegexOption.IGNORE_CASE) }
+            .forEach(::addUncountableRule)
     }
 }
