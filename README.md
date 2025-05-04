@@ -12,7 +12,7 @@ A Kotlin Multiplatform inflection library.
 ### Installation
 
 ```kotlin
-implementation("dev.codestead:inflekt:0.1.0")
+implementation("com.github.dsrees:inflekt:0.1.0")
 ```
 
 ### How to Use
