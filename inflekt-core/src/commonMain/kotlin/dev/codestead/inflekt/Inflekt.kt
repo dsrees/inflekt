@@ -10,6 +10,18 @@ private data class Rule(
 private typealias RuleSet = MutableList<Rule>
 private typealias IrregularMap = MutableMap<String, String>
 
+private val Pair<String, String>.rule
+    get() = first
+
+private val Pair<String, String>.replacement
+    get() = second
+
+private val Pair<Regex, String>.rule
+    get() = first
+
+private val Pair<Regex, String>.replacement
+    get() = second
+
 object Inflekt {
     private val pluralRules: RuleSet = mutableListOf()
     private val singularRules: RuleSet = mutableListOf()
@@ -22,10 +34,10 @@ object Inflekt {
     }
 
     /**
-     * Pluralize a word.
+     * Pluralize a [word].
      *
      * @param word
-     * @return
+     * @return The inflected [word].
      */
     fun plural(word: String): String = replaceWord(word, irregularSingles, irregularPlurals, pluralRules)
 
@@ -33,23 +45,23 @@ object Inflekt {
      * Check if a word is plural.
      *
      * @param word
-     * @return
+     * @return if the [word] is plural.
      */
     fun isPlural(word: String): Boolean = checkWord(word, irregularSingles, irregularPlurals, pluralRules)
 
     /**
-     * Singularize a word.
+     * Singularize a [word].
      *
      * @param word
-     * @return
+     * @return The inflected [word].
      */
     fun singular(word: String): String = replaceWord(word, irregularPlurals, irregularSingles, singularRules)
 
     /**
-     * Check if a word is singular.
+     * Check if a [word] is singular.
      *
      * @param word
-     * @return
+     * @return if the [word] is singular.
      */
     fun isSingular(word: String): Boolean = checkWord(word, irregularPlurals, irregularSingles, singularRules)
 
@@ -103,6 +115,8 @@ object Inflekt {
 
         return word
     }
+
+    private fun sanitizeRule(rule: String): Regex = Regex("^$rule$", RegexOption.IGNORE_CASE)
 
     private fun replace(
         word: String,
@@ -160,30 +174,47 @@ object Inflekt {
     /**
      * Add a pluralization rule to the collection.
      *
+     * ```kotlin
+     * addPluralRule("person" to "peeps")
+     * ```
+     *
+     * @param pair
+     */
+    fun addPluralRule(pair: Pair<String, String>) = addPluralRule(pair.rule, pair.replacement)
+
+    /**
+     * Add a pluralization rule to the collection.
+     * Does not expect a regex pattern, pass a [Regex] instead.
+     *
+     * ```kotlin
+     * addPluralRule("person", "peeps")
+     * ```
+     *
      * @param rule
      * @param replacement
      */
     fun addPluralRule(
         rule: String,
         replacement: String,
-    ) = addPluralRule(rule.toRegex(RegexOption.IGNORE_CASE), replacement)
+    ) = addPluralRule(sanitizeRule(rule) to replacement)
 
     /**
      * Add a pluralization rule to the collection.
      *
+     * ```kotlin
+     * addPluralRule(Regex("gex$", RegexOption.IGNORE_CASE) to "gexii")
+     * ```
+     *
      * @param pair
      */
-    fun addPluralRule(pair: Pair<String, String>) = addPluralRule(pair.first, pair.second)
+    fun addPluralRule(pair: Pair<Regex, String>) = addPluralRule(pair.rule, pair.replacement)
 
     /**
      * Add a pluralization rule to the collection.
      *
-     * @param pair
-     */
-    fun addPluralRule(pair: Pair<Regex, String>) = addPluralRule(pair.first, pair.second)
-
-    /**
-     * Add a pluralization rule to the collection.
+     * ```kotlin
+     * addPluralRule(Regex("gex$", RegexOption.IGNORE_CASE), "gexii")
+     * ```
      *
      * @param rule
      * @param replacement
@@ -191,13 +222,26 @@ object Inflekt {
     fun addPluralRule(
         rule: Regex,
         replacement: String,
-    ) {
-        Rule(rule, replacement)
-            .also { pluralRules.add(it) }
-    }
+    ) = pluralRules.add(Rule(rule, replacement))
 
     /**
      * Add a singularization rule to the collection.
+     *
+     * ```kotlin
+     * addSingularRule("singles" to "singular")
+     * ```
+     *
+     * @param pair
+     */
+    fun addSingularRule(pair: Pair<String, String>) = addSingularRule(pair.rule, pair.replacement)
+
+    /**
+     * Add a singularization rule to the collection.
+     * Does not expect a regex pattern, pass a [Regex] instead.
+     *
+     * ```kotlin
+     * addSingularRule("singles", "singular")
+     * ```
      *
      * @param rule
      * @param replacement
@@ -205,17 +249,25 @@ object Inflekt {
     fun addSingularRule(
         rule: String,
         replacement: String,
-    ) = addSingularRule(rule.toRegex(RegexOption.IGNORE_CASE), replacement)
+    ) = addSingularRule(sanitizeRule(rule) to replacement)
 
     /**
      * Add a singularization rule to the collection.
      *
+     * ```kotlin
+     * addSingularRule(Regex("singles$") to "singular")
+     * ```
+     *
      * @param pair
      */
-    fun addSingularRule(pair: Pair<String, String>) = addSingularRule(pair.first, pair.second)
+    fun addSingularRule(pair: Pair<Regex, String>) = addSingularRule(pair.rule, pair.replacement)
 
     /**
      * Add a singularization rule to the collection.
+     *
+     * ```kotlin
+     * addSingularRule(Regex("singles$"), "singular")
+     * ```
      *
      * @param rule
      * @param replacement
@@ -223,13 +275,14 @@ object Inflekt {
     fun addSingularRule(
         rule: Regex,
         replacement: String,
-    ) {
-        Rule(rule, replacement)
-            .also { singularRules.add(it) }
-    }
+    ) = singularRules.add(Rule(rule, replacement))
 
     /**
      * Add a uncountable rule to the collection.
+     *
+     * ```kotlin
+     * addUncountableRule("paper")
+     * ```
      *
      * @param word
      */
@@ -239,6 +292,10 @@ object Inflekt {
 
     /**
      * Add a uncountable rule to the collection.
+     *
+     * ```kotlin
+     * addUncountableRule(Regex("sheep$", RegexOption.IGNORE_CASE))
+     * ```
      *
      * @param rule
      */
@@ -250,14 +307,22 @@ object Inflekt {
     /**
      * Add an irregular word definition.
      *
+     * ```kotlin
+     * addIrregularRule("canvas" to "canvases")
+     * ```
+     *
      * @param pair
      */
     fun addIrregularRule(pair: Pair<String, String>) {
-        addIrregularRule(pair.first, pair.second)
+        addIrregularRule(pair.rule, pair.replacement)
     }
 
     /**
      * Add an irregular word definition.
+     *
+     * ```kotlin
+     * addIrregularRule("canvas", "canvases")
+     * ```
      *
      * @param single The singular version of the word. e.g. "I"
      * @param plural The plural version of the word. e.g. "we"
@@ -274,7 +339,7 @@ object Inflekt {
     }
 
     /**
-     *
+     * Resets the ruleset, removing any added custom rules.
      */
     fun resetRules() {
         // Clear all default rules plus additionally added rules
@@ -379,13 +444,13 @@ object Inflekt {
             "(child)(?:ren)?\$" to "\$1ren",
             "eaux\$" to "\$0",
             "m[ae]n\$" to "men",
-            "^thou\$" to "you",
         ).map { it.first.toRegex(RegexOption.IGNORE_CASE) to it.second }
             .forEach(::addPluralRule)
 
+        // Literal string rules
         listOf(
             "thou" to "you",
-        ).map { it.first.toRegex(RegexOption.IGNORE_CASE) to it.second }
+        ).forEach(::addPluralRule)
     }
 
     private fun seedSingularizationRules() {

@@ -103,7 +103,7 @@ class PluralizeTest {
     @Test
     fun `adding new rules - should allow new plural matching rules to be strings`() {
         assertEquals("people", "person".pluralize())
-        Inflekt.addPluralRule("person", "peeps")
+        Inflekt.addPluralRule("person" to "peeps")
         assertEquals("peeps", "person".pluralize())
 
         Inflekt.resetRules()
