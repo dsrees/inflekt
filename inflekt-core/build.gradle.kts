@@ -42,7 +42,7 @@ kotlin {
 }
 
 android {
-    namespace = "dev.codestead.inflekt"
+    namespace = "com.github.dsrees.inflekt"
     compileSdk = 35
     defaultConfig {
         minSdk = 21
