@@ -168,7 +168,8 @@ object Inflekt {
     }
 
     /**
-     * Add a pluralization rule to the collection.
+     * Add a pluralization rule to the collection. [RuleType] must be either
+     * a [String] or [Regex]
      *
      * ```kotlin
      * addPluralRule("person" to "peeps")
@@ -176,7 +177,7 @@ object Inflekt {
      * ```
      *
      * @param pair
-     * @throws [IllegalArgumentException] if rule was not a [String] or [Regex]
+     * @throws [IllegalArgumentException] if [RuleType] was not a [String] or [Regex]
      */
     fun <RuleType> addPluralRule(pair: Pair<RuleType, String>) {
         when (val rule = pair.rule) {
@@ -218,14 +219,17 @@ object Inflekt {
     ) = pluralRules.add(Rule(rule, replacement))
 
     /**
-     * Add a singularization rule to the collection.
+     * Add a singularization rule to the collection. [RuleType] must be either
+     * a [String] or [Regex]
      *
      * ```kotlin
      * addSingularRule("singles" to "singular")
+     * addSingularRule(Regex("singles$") to "singular")
      * ```
      *
      * @param pair
-     * @throws [IllegalArgumentException] if rule was not a [String] or [Regex]
+     * @
+     * @throws [IllegalArgumentException] if [RuleType] was not a [String] or [Regex]
      */
     fun <RuleType> addSingularRule(pair: Pair<RuleType, String>) {
         when (val rule = pair.rule) {
