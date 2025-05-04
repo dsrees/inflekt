@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinKover)
+    alias(libs.plugins.mavenPublish)
 }
 
 kotlin {
@@ -50,5 +51,36 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+mavenPublishing {
+    pom {
+        name = "infleckt"
+        description = "An inflection library for pluralizing Strings."
+        url = "https://github.com/dsrees/inflekt"
+        inceptionYear = "2025"
+
+        licenses {
+            license {
+                name = "MIT License"
+                url = "https://opensource.org/license/MIT"
+                distribution = "https://opensource.org/license/MIT"
+            }
+        }
+
+        scm {
+            connection = "scm:git:git://github.com/dsrees/inflekt.git"
+            developerConnection = "scm:git:ssh://github.com/dsrees/inflekt.git"
+            url = "https://github.com/dsrees/inflekt"
+        }
+
+        developers {
+            developer {
+                name = "Daniel Rees"
+                email = "daniel.rees18@gmail.com"
+                url = "https://github.com/dsrees"
+            }
+        }
     }
 }
