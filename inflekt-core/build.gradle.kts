@@ -58,7 +58,11 @@ android {
 }
 
 mavenPublishing {
-    coordinates("com.github.dsrees", "inflekt", version.toString())
+    coordinates(
+        groupId = "com.github.dsrees",
+        artifactId = "inflekt",
+        version = version.toString(),
+    )
 
     pom {
         name = "infleckt"
