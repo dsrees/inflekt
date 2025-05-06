@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Inflekt"
+rootProject.name = "inflekt"
 include(":inflekt-core")
