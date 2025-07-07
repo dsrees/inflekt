@@ -1,9 +1,5 @@
-name: Publish to Maven Central
-
-on:
-  push:
-    tags:
-      - '*'  # This triggers the workflow for any new tag
+name: Publish
+on: workflow_dispatch
 
 jobs:
   publish:
@@ -20,7 +16,7 @@ jobs:
           java-version: '17'
 
       - name: Publish to Maven Central
-        run: ./gradlew :inflect-core:publishAndReleaseToMavenCentral --no-configuration-cache
+        run: ./gradlew :inflekt-core:publishAndReleaseToMavenCentral --no-configuration-cache
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
