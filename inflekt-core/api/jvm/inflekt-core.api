@@ -1,0 +1,28 @@
+public final class com/github/dsrees/inflekt/Inflekt {
+	public static final field INSTANCE Lcom/github/dsrees/inflekt/Inflekt;
+	public final fun addIrregularRule (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun addIrregularRule (Lkotlin/Pair;)V
+	public final fun addPluralRule (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun addPluralRule (Lkotlin/Pair;)V
+	public final fun addPluralRule (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun addSingularRule (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun addSingularRule (Lkotlin/Pair;)V
+	public final fun addSingularRule (Lkotlin/text/Regex;Ljava/lang/String;)V
+	public final fun addUncountableRule (Ljava/lang/String;)V
+	public final fun addUncountableRule (Lkotlin/text/Regex;)V
+	public final fun isPlural (Ljava/lang/String;)Z
+	public final fun isSingular (Ljava/lang/String;)Z
+	public final fun plural (Ljava/lang/String;)Ljava/lang/String;
+	public final fun resetRules ()V
+	public final fun singular (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class com/github/dsrees/inflekt/PluralizeKt {
+	public static final fun isPlural (Ljava/lang/String;)Z
+	public static final fun isSingular (Ljava/lang/String;)Z
+	public static final fun pluralize (Ljava/lang/String;IZ)Ljava/lang/String;
+	public static synthetic fun pluralize$default (Ljava/lang/String;IZILjava/lang/Object;)Ljava/lang/String;
+	public static final fun singularize (Ljava/lang/String;Z)Ljava/lang/String;
+	public static synthetic fun singularize$default (Ljava/lang/String;ZILjava/lang/Object;)Ljava/lang/String;
+}
+

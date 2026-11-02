@@ -1,0 +1,33 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <inflekt:inflekt-core>
+final object com.github.dsrees.inflekt/Inflekt { // com.github.dsrees.inflekt/Inflekt|null[0]
+    final fun <#A1: kotlin/Any?> addPluralRule(kotlin/Pair<#A1, kotlin/String>) // com.github.dsrees.inflekt/Inflekt.addPluralRule|addPluralRule(kotlin.Pair<0:0,kotlin.String>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> addSingularRule(kotlin/Pair<#A1, kotlin/String>) // com.github.dsrees.inflekt/Inflekt.addSingularRule|addSingularRule(kotlin.Pair<0:0,kotlin.String>){0§<kotlin.Any?>}[0]
+    final fun addIrregularRule(kotlin/Pair<kotlin/String, kotlin/String>) // com.github.dsrees.inflekt/Inflekt.addIrregularRule|addIrregularRule(kotlin.Pair<kotlin.String,kotlin.String>){}[0]
+    final fun addIrregularRule(kotlin/String, kotlin/String) // com.github.dsrees.inflekt/Inflekt.addIrregularRule|addIrregularRule(kotlin.String;kotlin.String){}[0]
+    final fun addPluralRule(kotlin.text/Regex, kotlin/String) // com.github.dsrees.inflekt/Inflekt.addPluralRule|addPluralRule(kotlin.text.Regex;kotlin.String){}[0]
+    final fun addPluralRule(kotlin/String, kotlin/String) // com.github.dsrees.inflekt/Inflekt.addPluralRule|addPluralRule(kotlin.String;kotlin.String){}[0]
+    final fun addSingularRule(kotlin.text/Regex, kotlin/String) // com.github.dsrees.inflekt/Inflekt.addSingularRule|addSingularRule(kotlin.text.Regex;kotlin.String){}[0]
+    final fun addSingularRule(kotlin/String, kotlin/String) // com.github.dsrees.inflekt/Inflekt.addSingularRule|addSingularRule(kotlin.String;kotlin.String){}[0]
+    final fun addUncountableRule(kotlin.text/Regex) // com.github.dsrees.inflekt/Inflekt.addUncountableRule|addUncountableRule(kotlin.text.Regex){}[0]
+    final fun addUncountableRule(kotlin/String) // com.github.dsrees.inflekt/Inflekt.addUncountableRule|addUncountableRule(kotlin.String){}[0]
+    final fun isPlural(kotlin/String): kotlin/Boolean // com.github.dsrees.inflekt/Inflekt.isPlural|isPlural(kotlin.String){}[0]
+    final fun isSingular(kotlin/String): kotlin/Boolean // com.github.dsrees.inflekt/Inflekt.isSingular|isSingular(kotlin.String){}[0]
+    final fun plural(kotlin/String): kotlin/String // com.github.dsrees.inflekt/Inflekt.plural|plural(kotlin.String){}[0]
+    final fun resetRules() // com.github.dsrees.inflekt/Inflekt.resetRules|resetRules(){}[0]
+    final fun singular(kotlin/String): kotlin/String // com.github.dsrees.inflekt/Inflekt.singular|singular(kotlin.String){}[0]
+}
+
+final val com.github.dsrees.inflekt/isPlural // com.github.dsrees.inflekt/isPlural|@kotlin.String{}isPlural[0]
+    final fun (kotlin/String).<get-isPlural>(): kotlin/Boolean // com.github.dsrees.inflekt/isPlural.<get-isPlural>|<get-isPlural>@kotlin.String(){}[0]
+final val com.github.dsrees.inflekt/isSingular // com.github.dsrees.inflekt/isSingular|@kotlin.String{}isSingular[0]
+    final fun (kotlin/String).<get-isSingular>(): kotlin/Boolean // com.github.dsrees.inflekt/isSingular.<get-isSingular>|<get-isSingular>@kotlin.String(){}[0]
+
+final fun (kotlin/String).com.github.dsrees.inflekt/pluralize(kotlin/Int = ..., kotlin/Boolean = ...): kotlin/String // com.github.dsrees.inflekt/pluralize|pluralize@kotlin.String(kotlin.Int;kotlin.Boolean){}[0]
+final fun (kotlin/String).com.github.dsrees.inflekt/singularize(kotlin/Boolean = ...): kotlin/String // com.github.dsrees.inflekt/singularize|singularize@kotlin.String(kotlin.Boolean){}[0]
