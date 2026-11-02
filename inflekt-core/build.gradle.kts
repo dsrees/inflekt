@@ -37,10 +37,29 @@ kotlin {
 
     iosArm64()
     iosSimulatorArm64()
+    macosArm64()
+    tvosArm64()
+    tvosSimulatorArm64()
+    watchosArm64()
+    watchosSimulatorArm64()
+
+    linuxX64()
+    linuxArm64()
+    mingwX64()
 
     sourceSets {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+    }
+}
+
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(95)
+            }
         }
     }
 }
