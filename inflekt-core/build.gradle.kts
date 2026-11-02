@@ -16,7 +16,7 @@ kotlin {
 
     android {
         namespace = "com.github.dsrees.inflekt"
-        compileSdk = 35
+        compileSdk = 37
         minSdk = 21
 
         withHostTest {}
