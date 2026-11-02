@@ -13,7 +13,7 @@ A Kotlin Multiplatform inflection library.
 
 <!-- x-release-please-start-version -->
 ```kotlin
-implementation("com.github.dsrees:inflekt:0.2.0")
+implementation("com.github.dsrees:inflekt:0.3.0")
 ```
 <!-- x-release-please-end -->
 
