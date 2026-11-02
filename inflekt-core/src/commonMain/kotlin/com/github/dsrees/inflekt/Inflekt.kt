@@ -129,7 +129,9 @@ public object Inflekt {
                     restoreCase(referenceChar.toString(), result)
                 }
 
-                else -> restoreCase(matchResult.value, result)
+                else -> {
+                    restoreCase(matchResult.value, result)
+                }
             }
         }
 

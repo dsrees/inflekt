@@ -17,7 +17,14 @@ implementation("com.github.dsrees:inflekt:0.2.0")
 ```
 <!-- x-release-please-end -->
 
-Supported targets: Android, iOS (`iosArm64`, `iosSimulatorArm64`), and JVM.
+Supported targets:
+
+- Android and JVM
+- Apple: `iosArm64`, `iosSimulatorArm64`, `macosArm64`, `tvosArm64`, `tvosSimulatorArm64`,
+  `watchosArm64`, `watchosSimulatorArm64`
+- Linux: `linuxX64`, `linuxArm64`
+- Windows: `mingwX64`
+
 The same coordinate works from Kotlin Multiplatform, Android, and plain `kotlin("jvm")` modules;
 Gradle picks the right variant automatically.
 

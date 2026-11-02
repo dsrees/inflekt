@@ -1,11 +1,37 @@
 name: Test
-on: pull_request
+on:
+  pull_request:
+  # Also run on main so setup-gradle writes the Gradle cache (it only writes
+  # on the default branch) and every merge, including release PRs, is tested.
+  push:
+    branches:
+      - main
 permissions:
   checks: write
   pull-requests: write
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
+
+      - name: Check formatting
+        run: ./gradlew spotlessCheck
+
   run_tests:
-    # macOS is required to build and run the Kotlin/Native iOS targets.
+    # macOS is required to build and run the Kotlin/Native Apple targets.
     runs-on: macos-latest
     steps:
       - name: Checkout code
@@ -31,12 +57,11 @@ jobs:
         with:
           json_suite_details: true
           files: |
-            **/inflekt-core/build/test-results/testAndroidHostTest/TEST*.xml
-            **/inflekt-core/build/test-results/jvmTest/TEST*.xml
-            **/inflekt-core/build/test-results/iosSimulatorArm64Test/TEST*.xml
+            **/inflekt-core/build/test-results/**/TEST*.xml
 
       - name: Publish Kover Reports
         id: kover
+        if: github.event_name == 'pull_request'
         uses: mi-kas/kover-report@v2
         with:
           path: |
