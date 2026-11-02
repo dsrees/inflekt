@@ -24,6 +24,7 @@ jobs:
           json_suite_details: true
           files: |
             **/inflekt-core/build/test-results/testDebugUnitTest/TEST*.xml
+            **/inflekt-core/build/test-results/jvmTest/TEST*.xml
 
       - name: Publish Kover Reports
         id: kover

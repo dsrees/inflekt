@@ -9,10 +9,20 @@ plugins {
 }
 
 group = "com.github.dsrees.inflekt"
-version = "0.1.1-SNAPSHOT"
+version = "0.2.0"
 
 kotlin {
     androidTarget {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
+            }
+        }
+    }
+
+    jvm {
         compilations.all {
             compileTaskProvider.configure {
                 compilerOptions {
