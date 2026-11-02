@@ -12,8 +12,12 @@ A Kotlin Multiplatform inflection library.
 ### Installation
 
 ```kotlin
-implementation("com.github.dsrees:inflekt:0.1.0")
+implementation("com.github.dsrees:inflekt:0.2.0")
 ```
+
+Supported targets: Android, iOS (`iosX64`, `iosArm64`, `iosSimulatorArm64`), and JVM.
+The same coordinate works from Kotlin Multiplatform, Android, and plain `kotlin("jvm")` modules;
+Gradle picks the right variant automatically.
 
 ### How to Use
 
