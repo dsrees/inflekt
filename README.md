@@ -17,9 +17,11 @@ implementation("com.github.dsrees:inflekt:0.2.0")
 ```
 <!-- x-release-please-end -->
 
-Supported targets: Android, iOS (`iosX64`, `iosArm64`, `iosSimulatorArm64`), and JVM.
+Supported targets: Android, iOS (`iosArm64`, `iosSimulatorArm64`), and JVM.
 The same coordinate works from Kotlin Multiplatform, Android, and plain `kotlin("jvm")` modules;
 Gradle picks the right variant automatically.
+
+Requires Kotlin 2.4 or newer in consuming projects.
 
 ### How to Use
 
