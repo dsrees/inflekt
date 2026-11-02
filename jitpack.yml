@@ -1,0 +1,9 @@
+# JitPack builds on Linux, so only the Android, JVM, and common artifacts are
+# produced. Maven Central is the primary distribution and includes iOS.
+jdk:
+  # Gradle 9 needs Java 17+ to launch. The daemon then runs on Java 21 per
+  # gradle/gradle-daemon-jvm.properties, provisioned via the foojay resolver.
+  - openjdk17
+install:
+  # JitPack has no signing keys, so disable release signing.
+  - ./gradlew publishToMavenLocal -PRELEASE_SIGNING_ENABLED=false --no-configuration-cache
