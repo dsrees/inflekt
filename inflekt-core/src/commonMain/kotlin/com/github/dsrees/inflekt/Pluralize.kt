@@ -17,7 +17,7 @@ import kotlin.math.abs
  * @param inclusive Whether to prefix with the number (e.g. 3 ducks). Default false
  * @return The inflected word.
  */
-fun String.pluralize(
+public fun String.pluralize(
     count: Int = 2,
     inclusive: Boolean = false,
 ): String {
@@ -46,7 +46,7 @@ fun String.pluralize(
  * @param inclusive Whether to prefix with the number (e.g. 1 duck). Default false
  * @return The inflected word.
  */
-fun String.singularize(inclusive: Boolean = false) = pluralize(1, inclusive)
+public fun String.singularize(inclusive: Boolean = false): String = pluralize(1, inclusive)
 
 /**
  * Check if a word is plural.
@@ -56,7 +56,7 @@ fun String.singularize(inclusive: Boolean = false) = pluralize(1, inclusive)
  * "ducks".isPlural // true
  * ```
  */
-val String.isPlural: Boolean
+public val String.isPlural: Boolean
     get() = Inflekt.isPlural(this)
 
 /**
@@ -67,5 +67,5 @@ val String.isPlural: Boolean
  * "ducks".isSingular // false
  * ```
  */
-val String.isSingular: Boolean
+public val String.isSingular: Boolean
     get() = Inflekt.isSingular(this)

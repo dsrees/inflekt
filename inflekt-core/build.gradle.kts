@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,11 +8,14 @@ plugins {
     alias(libs.plugins.mavenPublish)
 }
 
-group = "com.github.dsrees.inflekt"
 version = rootProject.file("version.txt").readText().trim()
 
 kotlin {
     jvmToolchain(21)
+    explicitApi()
+
+    @OptIn(ExperimentalAbiValidation::class)
+    abiValidation()
 
     android {
         namespace = "com.github.dsrees.inflekt"
@@ -32,22 +35,10 @@ kotlin {
         }
     }
 
-    val xcf = XCFramework()
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
-            baseName = "inflekt-core"
-            xcf.add(this)
-            isStatic = true
-        }
-    }
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
-        commonMain.dependencies {
-            // put your multiplatform dependencies here
-        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
@@ -62,7 +53,7 @@ mavenPublishing {
     )
 
     pom {
-        name = "infleckt"
+        name = "inflekt"
         description = "An inflection library for pluralizing Strings."
         url = "https://github.com/dsrees/inflekt"
         inceptionYear = "2025"

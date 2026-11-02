@@ -16,7 +16,7 @@ private val <A, B> Pair<A, B>.rule
 private val <A, B> Pair<A, B>.replacement
     get() = second
 
-object Inflekt {
+public object Inflekt {
     private val pluralRules: RuleSet = mutableListOf()
     private val singularRules: RuleSet = mutableListOf()
     private val uncountables = mutableSetOf<String>()
@@ -33,7 +33,7 @@ object Inflekt {
      * @param word
      * @return The inflected [word].
      */
-    fun plural(word: String): String = replaceWord(word, irregularSingles, irregularPlurals, pluralRules)
+    public fun plural(word: String): String = replaceWord(word, irregularSingles, irregularPlurals, pluralRules)
 
     /**
      * Check if a word is plural.
@@ -41,7 +41,7 @@ object Inflekt {
      * @param word
      * @return if the [word] is plural.
      */
-    fun isPlural(word: String): Boolean = checkWord(word, irregularSingles, irregularPlurals, pluralRules)
+    public fun isPlural(word: String): Boolean = checkWord(word, irregularSingles, irregularPlurals, pluralRules)
 
     /**
      * Singularize a [word].
@@ -49,7 +49,7 @@ object Inflekt {
      * @param word
      * @return The inflected [word].
      */
-    fun singular(word: String): String = replaceWord(word, irregularPlurals, irregularSingles, singularRules)
+    public fun singular(word: String): String = replaceWord(word, irregularPlurals, irregularSingles, singularRules)
 
     /**
      * Check if a [word] is singular.
@@ -57,7 +57,7 @@ object Inflekt {
      * @param word
      * @return if the [word] is singular.
      */
-    fun isSingular(word: String): Boolean = checkWord(word, irregularPlurals, irregularSingles, singularRules)
+    public fun isSingular(word: String): Boolean = checkWord(word, irregularPlurals, irregularSingles, singularRules)
 
     private fun replaceWord(
         word: String,
@@ -179,7 +179,7 @@ object Inflekt {
      * @param pair
      * @throws [IllegalArgumentException] if [RuleType] was not a [String] or [Regex]
      */
-    fun <RuleType> addPluralRule(pair: Pair<RuleType, String>) {
+    public fun <RuleType> addPluralRule(pair: Pair<RuleType, String>) {
         when (val rule = pair.rule) {
             is Regex -> addPluralRule(rule, pair.replacement)
             is String -> addPluralRule(rule, pair.replacement)
@@ -198,10 +198,10 @@ object Inflekt {
      * @param rule
      * @param replacement
      */
-    fun addPluralRule(
+    public fun addPluralRule(
         rule: String,
         replacement: String,
-    ) = addPluralRule(sanitizeRule(rule) to replacement)
+    ): Unit = addPluralRule(sanitizeRule(rule) to replacement)
 
     /**
      * Add a pluralization rule to the collection.
@@ -213,10 +213,12 @@ object Inflekt {
      * @param rule
      * @param replacement
      */
-    fun addPluralRule(
+    public fun addPluralRule(
         rule: Regex,
         replacement: String,
-    ) = pluralRules.add(Rule(rule, replacement))
+    ) {
+        pluralRules.add(Rule(rule, replacement))
+    }
 
     /**
      * Add a singularization rule to the collection. [RuleType] must be either
@@ -231,7 +233,7 @@ object Inflekt {
      * @
      * @throws [IllegalArgumentException] if [RuleType] was not a [String] or [Regex]
      */
-    fun <RuleType> addSingularRule(pair: Pair<RuleType, String>) {
+    public fun <RuleType> addSingularRule(pair: Pair<RuleType, String>) {
         when (val rule = pair.rule) {
             is Regex -> addSingularRule(rule, pair.replacement)
             is String -> addSingularRule(rule, pair.replacement)
@@ -250,10 +252,10 @@ object Inflekt {
      * @param rule
      * @param replacement
      */
-    fun addSingularRule(
+    public fun addSingularRule(
         rule: String,
         replacement: String,
-    ) = addSingularRule(sanitizeRule(rule) to replacement)
+    ): Unit = addSingularRule(sanitizeRule(rule) to replacement)
 
     /**
      * Add a singularization rule to the collection.
@@ -265,10 +267,12 @@ object Inflekt {
      * @param rule
      * @param replacement
      */
-    fun addSingularRule(
+    public fun addSingularRule(
         rule: Regex,
         replacement: String,
-    ) = singularRules.add(Rule(rule, replacement))
+    ) {
+        singularRules.add(Rule(rule, replacement))
+    }
 
     /**
      * Add a uncountable rule to the collection.
@@ -279,7 +283,7 @@ object Inflekt {
      *
      * @param word
      */
-    fun addUncountableRule(word: String) {
+    public fun addUncountableRule(word: String) {
         uncountables.add(word.lowercase())
     }
 
@@ -292,7 +296,7 @@ object Inflekt {
      *
      * @param rule
      */
-    fun addUncountableRule(rule: Regex) {
+    public fun addUncountableRule(rule: Regex) {
         addPluralRule(rule, "$0")
         addSingularRule(rule, "$0")
     }
@@ -306,7 +310,7 @@ object Inflekt {
      *
      * @param pair
      */
-    fun addIrregularRule(pair: Pair<String, String>) {
+    public fun addIrregularRule(pair: Pair<String, String>) {
         addIrregularRule(pair.rule, pair.replacement)
     }
 
@@ -320,7 +324,7 @@ object Inflekt {
      * @param single The singular version of the word. e.g. "I"
      * @param plural The plural version of the word. e.g. "we"
      */
-    fun addIrregularRule(
+    public fun addIrregularRule(
         single: String,
         plural: String,
     ) {
@@ -334,7 +338,7 @@ object Inflekt {
     /**
      * Resets the ruleset, removing any added custom rules.
      */
-    fun resetRules() {
+    public fun resetRules() {
         // Clear all default rules plus additionally added rules
         pluralRules.clear()
         singularRules.clear()
