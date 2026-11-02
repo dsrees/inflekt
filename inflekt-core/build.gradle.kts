@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.dsrees.inflekt"
-version = "0.2.0"
+version = rootProject.file("version.txt").readText().trim()
 
 kotlin {
     androidTarget {
