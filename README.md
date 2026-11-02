@@ -21,6 +21,8 @@ Supported targets: Android, iOS (`iosX64`, `iosArm64`, `iosSimulatorArm64`), and
 The same coordinate works from Kotlin Multiplatform, Android, and plain `kotlin("jvm")` modules;
 Gradle picks the right variant automatically.
 
+Requires Kotlin 2.4 or newer in consuming projects.
+
 ### How to Use
 
 This library provides extensions for pluralizing and singularizing English words. It also supports

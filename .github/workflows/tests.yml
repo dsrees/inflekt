@@ -10,6 +10,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -23,7 +34,7 @@ jobs:
         with:
           json_suite_details: true
           files: |
-            **/inflekt-core/build/test-results/testDebugUnitTest/TEST*.xml
+            **/inflekt-core/build/test-results/testAndroidHostTest/TEST*.xml
             **/inflekt-core/build/test-results/jvmTest/TEST*.xml
 
       - name: Publish Kover Reports

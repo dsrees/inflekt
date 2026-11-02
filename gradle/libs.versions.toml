@@ -1,14 +1,14 @@
 [versions]
-agp = "8.9.0"
-kotlin = "2.0.0"
-kover = "0.9.1"
-mavenPublish = "0.30.0"
+agp = "9.5.0"
+kotlin = "2.4.21"
+kover = "0.9.11"
+mavenPublish = "0.37.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 [plugins]
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinKover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
